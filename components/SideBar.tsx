@@ -1,5 +1,5 @@
 'use client'
-import { SidBarLinks } from '@/constants'
+import { SideBarLinks } from '@/constants'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,7 +15,7 @@ const SideBar = () => {
         <div className='flex flex-1 flex-col gap-6'>
 
         {
-            SidBarLinks.map((link) => {
+            SideBarLinks.map((link) => {
                 const isActive = pathname === link.route || (pathname.startsWith(link.route) && link.route !== '/');
                 return (
                     <Link

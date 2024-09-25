@@ -1,6 +1,6 @@
 
 
-export const SidBarLinks = [
+export const SideBarLinks = [
     {   
         label : 'Home',
         imgurl: '/icons/Home.svg',
