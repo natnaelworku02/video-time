@@ -8,11 +8,8 @@ import React, { useEffect, useState } from "react";
 import MeetingCard from "./MeetingCard";
 import Loader from "./Loader";
 import { useToast } from "@/hooks/use-toast";
-import { title } from "process";
 
-interface props {
-  type: "ended" | "upcoming" | "recordings";
-}
+
 
 const CallList = (type: { type: "ended" | "upcoming" | "recordings" }) => {
   const { ended, upcomings, recorded, isLoading } = useGetCalls();
@@ -48,7 +45,7 @@ const CallList = (type: { type: "ended" | "upcoming" | "recordings" }) => {
   useEffect(()=>{
     const fetchrecordings = async()=>{
         try {
-            const calldata = await Promise.all(recorded.map((meeting) => meeting.queryRecordings()));
+            const calldata = recorded ? await Promise.all(recorded.map((meeting) => meeting.queryRecordings())) : [];
             const recordings = calldata.filter(call => call.recordings.length > 0).flatMap(call => call.recordings);
             setCallRecordings(recordings.map(recording => ({
                 ...recording,
@@ -57,7 +54,7 @@ const CallList = (type: { type: "ended" | "upcoming" | "recordings" }) => {
             })));
         } catch (error) {
             toast.toast({ 
-                title: "Failed to fetch recordings",
+                title: `${error}`,
             })
         }
     }
@@ -71,39 +68,7 @@ const CallList = (type: { type: "ended" | "upcoming" | "recordings" }) => {
   if (isLoading) {
     return <Loader/>;
   }
-  // return (
-  //   <div className="grid grid-cols-1 gap-5 xl:grid-cols-2 ">
-  //     {calls && calls.length > 0 ? (
-  //       calls.map((meeting: Call | CallRecording) =>
-  //            <MeetingCard 
-  //       key={(meeting as Call).id}
-  //       icon ={
-  //           type.type === 'ended' 
-  //           ? '/icons/previous.svg'
-  //           : type.type === 'upcoming'
-  //           ? '/icons/upcoming.svg'
-  //           : '/icons/recordings.svg'
-  //       }
-  //       title = {
-  //           (meeting as Call).state?.custom.description.substring(0,20) || (meeting as CallRecording).filename?.substring(0,26) || 'No Title'
-  //       }
-  //       date ={(meeting as Call).state?.startsAt?.toLocaleString() || (meeting as CallRecording).start_time?.toLocaleString()}
-  //       isPreviousMeeting ={type.type === 'ended'}
-  //       buttonIcon1 = {type.type === 'recordings' ? '/icons/play.svg' : undefined}
-  //       handleClick = {type.type === 'recordings'? ()=>router.push((meeting as CallRecording).url) : ()=>router.push('/meeting/'+(meeting as Call).id)}
-  //       link = {type.type === 'recordings'? (meeting as CallRecording).url : process.env.NEXT_PUBLIC_BASE_URL + '/meeting/' + (meeting as Call).id}
-  //       buttonText = {type.type === 'recordings' ? 'Play Recording' : 'Start'}
-        
-  //       />
-    
-  //   )
-  //     ) : (
-  //       <h1>{callsmessage}</h1>
-  //     )}
-  //   </div>
-  // );
-
-
+  
   return (
     <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
       {calls && calls.length > 0 ? (

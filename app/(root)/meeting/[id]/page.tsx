@@ -9,7 +9,7 @@ import React , { useState}from 'react'
 
 const Meeting = ({params}: {params:{id:string}}) => {
   const [isSetUpComplete,setIsSetUpComplete]  = useState(false)
-  const {user,isLoaded} = useUser();
+  const {isLoaded} = useUser();
   const {call,isCallLoading} = useGetCallById(params.id)
 
   if (!isLoaded || isCallLoading) return <Loader/>

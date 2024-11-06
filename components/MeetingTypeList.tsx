@@ -1,12 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import HomeCard from "./HomeCard";
 import { useRouter } from "next/navigation";
 import MeetingModal from "./MeetingModal";
 import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
-import { Description } from "@radix-ui/react-dialog";
 import { useToast } from "@/hooks/use-toast"
 import { Textarea } from "./ui/textarea";
 import ReactDatePicker from "react-datepicker";

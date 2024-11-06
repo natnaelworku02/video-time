@@ -1,7 +1,7 @@
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 import { Metadata } from "next";
-import React, { Children } from "react";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Video-Time",
